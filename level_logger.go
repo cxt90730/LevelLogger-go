@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 )
 
 const (
@@ -28,34 +29,34 @@ func NewLevelLogger(logFile *os.File, prefix string, flag int, level int) (*Leve
 
 func (l *LevelLogger) Error(v ...interface{}) {
 	if l.logLevel >= LogError {
-		l.PrintLevelLog("ERROR", v...)
+		l.PrintLevelLog(LogError, v...)
 	}
 }
 
 func (l *LevelLogger) Warning(v ...interface{}) {
 	if l.logLevel >= LogWarning {
-		l.PrintLevelLog("WARNING", v...)
+		l.PrintLevelLog(LogWarning, v...)
 	}
 }
 
 func (l *LevelLogger) Info(v ...interface{}) {
 	if l.logLevel >= LogInfo {
-		l.PrintLevelLog("INFO", v...)
+		l.PrintLevelLog(LogInfo, v...)
 	}
 }
 
 func (l *LevelLogger) Debug(v ...interface{}) {
 	if l.logLevel >= LogDebug {
-		l.PrintLevelLog("DEBUG", v...)
+		l.PrintLevelLog(LogDebug, v...)
 	}
 }
 
-func (l *LevelLogger) PrintLevelLog(level string, v ...interface{}) {
+func (l *LevelLogger) PrintLevelLog(level int, v ...interface{}) {
 	printLevelLog(l.logger, level, v...)
 }
 
-func printLevelLog(logger *log.Logger, level string, v ...interface{}) {
-	f := logFormat(level, v...)
+func printLevelLog(logger *log.Logger, level int, v ...interface{}) {
+	f := logFormat(strconv.Itoa(level), v...)
 	logger.Printf(f, v...)
 }
 
