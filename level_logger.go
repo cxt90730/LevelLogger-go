@@ -3,6 +3,7 @@ package LevelLogger_go
 import (
 	"fmt"
 	"log"
+	"os"
 )
 
 const (
@@ -15,6 +16,14 @@ const (
 type LevelLogger struct {
 	logger   *log.Logger
 	logLevel int
+}
+
+func NewLevelLogger(logFile *os.File, prefix string, flag int, level int) (*LevelLogger, error) {
+	_, err := logFile.Stat()
+	if err != nil {
+		return nil, err
+	}
+	return &LevelLogger{log.New(logFile, prefix, flag), level}, nil
 }
 
 func (l *LevelLogger) Error(v ...interface{}) {
