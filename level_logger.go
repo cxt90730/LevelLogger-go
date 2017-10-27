@@ -14,6 +14,15 @@ const (
 	LogDebug
 )
 
+var (
+	LevelStringMap = map[int]string{
+		LogError:   "ERROR",
+		LogInfo:    "INFO",
+		LogWarning: "WARNING",
+		LogDebug:   "DEBUG",
+	}
+)
+
 type LevelLogger struct {
 	logger   *log.Logger
 	logLevel int
@@ -56,7 +65,8 @@ func (l *LevelLogger) PrintLevelLog(level int, v ...interface{}) {
 }
 
 func printLevelLog(logger *log.Logger, level int, v ...interface{}) {
-	f := logFormat(strconv.Itoa(level), v...)
+
+	f := logFormat(LevelStringMap[level], v...)
 	logger.Printf(f, v...)
 }
 
