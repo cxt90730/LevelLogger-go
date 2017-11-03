@@ -69,7 +69,7 @@ func printLevelLog(logger *log.Logger, level int, v ...interface{}) {
 }
 
 func logFormat(level string, v ...interface{}) string {
-	formatStr := fmt.Sprintf("[%s] ", level)
+	formatStr := fmt.Sprintf("[%s]\t", level)
 	for i := 0; i < len(v); i++ {
 		formatStr += "%v "
 	}
